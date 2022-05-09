@@ -1,12 +1,6 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Register User</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-content >
   <form action="">
+    <h1>Registrarse</h1>
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
       <ion-input type="text" #email required></ion-input>
@@ -14,15 +8,17 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" #password required></ion-input>
+      <ion-input type="password" minlength="6" maxlength="12" #password required></ion-input>
     </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button
-          type="submit" (click)="onRegister(email, password)"
-          expand="block">Register</ion-button>
-      </ion-col>
-    </ion-row>
+    <ion-col class="btn-group">
+      <ion-button color="medium" size="large" class="btn" routerLink="/login">
+        Entrar
+      </ion-button>
+
+      <ion-button type="submit" size="large" class="btn" color="primary" (click)="onRegister(email, password)">
+        Registrarse
+      </ion-button>
+    </ion-col>
   </form>
 
 </ion-content>

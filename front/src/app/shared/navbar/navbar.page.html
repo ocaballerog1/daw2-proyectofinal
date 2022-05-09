@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Citas Med
+      <ion-button *ngIf="!authSvc.userStatus" (click)="entrar()" class="float-end">Entrar</ion-button>
+      <ion-button *ngIf="authSvc.userStatus" (click)="cerrar()" class="float-end">Salir</ion-button>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>

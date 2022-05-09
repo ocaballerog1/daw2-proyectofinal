@@ -11,8 +11,9 @@ import {switchMap} from "rxjs/operators";
 export class AuthService {
 
   public user$:Observable<User>;
+  userStatus:boolean;
 
-  constructor(private afAuth:AngularFireAuth, private afs:AngularFirestore) {
+  constructor(public afAuth:AngularFireAuth, private afs:AngularFirestore) {
     //Puedo meterlo en un metodo aparte para que quede mejor
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -32,16 +33,6 @@ export class AuthService {
     }
   }
 
-  // async loginGoogle(): Promise<User> {
-  //   try {
-  //     const { user } = await this.afAuth.signInWithPopup(new auth.auth.GoogleAuthProvider());
-  //     this.updateUserData(user);
-  //     return user;
-  //   } catch (error) {
-  //     console.log('Error ->', error)
-  //   }
-  // }
-
   async register(email:string, password:string): Promise<User> {
     try {
       const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
@@ -56,6 +47,7 @@ export class AuthService {
     try {
       const { user } = await this.afAuth.signInWithEmailAndPassword(email, password);
       this.updateUserData(user);
+      this.userStatus = true;
       return user;
     } catch (error) {
       console.log('Error ->', error)
@@ -70,9 +62,14 @@ export class AuthService {
     }
   }
 
+  isEmailVerified(user:User): boolean{
+    return user.emailVerified === true ? true: false;
+  }
+
   async logout(): Promise<void> {
     try{
       await this.afAuth.signOut();
+      this.userStatus = false;
     }catch(error){
       console.log('Error ->', error)
     }

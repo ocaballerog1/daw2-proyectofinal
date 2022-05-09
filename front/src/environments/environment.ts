@@ -18,7 +18,7 @@ export const environment = {
     storageBucket: "aprende-2a547.appspot.com",
     messagingSenderId: "922536202732",
     appId: "1:922536202732:web:fe8da3fb0b838eb2d7f0c9",
-    measurementId: "G-ZFL68D5QSV"
+    measurementId: "G-ZFL68D5QSV",
   }
 };
 

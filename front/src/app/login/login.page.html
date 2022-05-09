@@ -1,9 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <h1>Login</h1>
+  <form action="" class="">
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" #email required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" minlength="6" maxlength="12" #password required></ion-input>
+    </ion-item>
+    <div class="text-center">
+      <a class="" routerLink="/forgot-password">Olvidaste la contraseña?</a>
+    </div>
+    <ion-row>
+      <ion-col class="btn-group">
+        <ion-button color="medium" size="large" class="btn" routerLink="/register">
+          Registrarse
+        </ion-button>
+
+        <ion-button type="submit" size="large" class="btn" color="primary" (click)="onLogin(email, password)">
+          Entrar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 </ion-content>
