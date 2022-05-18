@@ -8,11 +8,20 @@ import {AuthService} from "../../service/auth.service";
   styleUrls: ['./citas.page.scss'],
 })
 export class CitasPage implements OnInit {
-
-  constructor(private citasSvc:CitasService, private authSvc:AuthService) { }
+  citas: any[] = [];
+  constructor(private citasSvc: CitasService, private authSvc: AuthService) { }
 
   ngOnInit() {
-    // this.citasSvc.citasUser();
+    this.getCitas();
+  }
+
+  getCitas(){
+    this.citas = [];
+    this.citasSvc.getCitas().subscribe(data => {
+      data.forEach((element: any) =>{
+        this.citas.push(element.payload.doc.data());
+      });
+    });
   }
 
 }
