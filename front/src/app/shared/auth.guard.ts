@@ -10,17 +10,17 @@ import {map, take} from "rxjs/operators";
 export class AuthGuard implements CanActivate {
   constructor(private authSvc:AuthService, private router:Router) {
   }
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.authSvc.user$.pipe(
       take(1),
       map(user =>{
-        console.log('User ->',user)
         if (user){
+          this.authSvc.userStatus = true;
           return true;
+
         } else {
           //redirectToLoginPage
+          this.authSvc.userStatus = false;
           this.router.navigate(['/login']);
           return false;
         }

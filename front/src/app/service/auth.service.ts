@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {User} from "../shared/user.interface";
+import {User} from "../interfaces/user.interface";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import {Observable, of} from "rxjs";
@@ -13,7 +13,9 @@ export class AuthService {
   public user$:Observable<User>;
   userStatus:boolean;
 
-  constructor(public afAuth:AngularFireAuth, private afs:AngularFirestore) {
+  public user:User;
+
+  constructor(public afAuth:AngularFireAuth, public afs:AngularFirestore) {
     //Puedo meterlo en un metodo aparte para que quede mejor
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -48,6 +50,7 @@ export class AuthService {
       const { user } = await this.afAuth.signInWithEmailAndPassword(email, password);
       this.updateUserData(user);
       this.userStatus = true;
+      console.log(user)
       return user;
     } catch (error) {
       console.log('Error ->', error)
@@ -75,7 +78,7 @@ export class AuthService {
     }
   }
 
-  private updateUserData(user:User){
+  public updateUserData(user:User){
     const userRef:AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
     const data:User = {
@@ -84,6 +87,7 @@ export class AuthService {
       emailVerified:user.emailVerified,
       displayName:user.displayName,
     };
+    this.user = data;
 
     return userRef.set(data, {merge: true})
   }

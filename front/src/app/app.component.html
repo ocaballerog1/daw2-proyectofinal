@@ -1,5 +1,12 @@
-
 <ion-app>
-  <app-navbar></app-navbar>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main">
+    <!--  the side menu  -->
+    <ion-menu contentId="main">
+      <app-navbar class="h-100"></app-navbar>
+    </ion-menu>
+
+    <!-- the main content -->
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-split-pane>
+
 </ion-app>
