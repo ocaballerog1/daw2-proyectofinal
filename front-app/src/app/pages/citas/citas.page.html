@@ -1,18 +1,46 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Citas</ion-title>
+    <ion-title>Citas <ion-button class="ion-float-end" (click)="isOpen=true">Pedir Cita</ion-button></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let cita of citas">
-      <ion-button shape="round" color="primary">{{cita.fecha.seconds | date}}</ion-button>
+      <ion-button shape="round" color="primary">{{cita.fecha | date}}</ion-button>
       <ion-label>
-        <h2>Finn</h2>
         <h3>Medico: ?</h3>
         <p>Observaciones: {{cita.observaciones}}</p>
       </ion-label>
+      <ion-button class="ion-float-end" color="danger" (click)="cancelCita(cita.id)">Cancelar</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-modal [isOpen]="isOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Pedir Cita <ion-button color="danger" class="float-end" (click)="isOpen=false">X</ion-button></ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-row>
+        <ion-col>
+          <h3 class="ion-text-center">Pide una nueva cita</h3>
+          <form [formGroup]="addCita" (ngSubmit)="addCitas()">
+          <ion-item lines="full">
+            <ion-label>Observaciones:</ion-label>
+            <ion-textarea placeholder="Cuetanos que te ocurre.." maxlength="500"  formControlName="observaciones"></ion-textarea>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label >Fecha:</ion-label>
+            <ion-datetime show-default-time-label="false" formControlName="fecha" minute-values="0,15,30,45" hour-values="9,10,11,12,13" locale="es-Es"  #fecha></ion-datetime>
+          </ion-item>
+          <ion-button color="success" type="submit" (click)="isOpen=false">Pedir cita</ion-button>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ng-template>
+</ion-modal>

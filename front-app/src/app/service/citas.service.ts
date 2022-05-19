@@ -11,11 +11,14 @@ export class CitasService {
   constructor(private firestore:AngularFirestore, private authSvc:AuthService) {
   }
 
-  newCita(){
-
+  addcita(cita: any): Promise<any>{
+    return this.firestore.collection(`users/${this.authSvc.user.uid}/citas`).add(cita);
   }
 
   getCitas(){
     return this.firestore.collection(`users/${this.authSvc.user.uid}/citas`).snapshotChanges();
+  }
+  cancelCita(id:any): Promise<any>{
+    return this.firestore.collection(`users/${this.authSvc.user.uid}/citas`).doc(id).delete();
   }
 }
